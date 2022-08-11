@@ -1,0 +1,55 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title%} {% endblock %}</title>
+    <!-- ?{% now 'U' %} used to reset cache and load the styles.css file -->
+    <link rel="stylesheet" href="{% static 'blog/styles.css' %}?{% now 'U' %}" type="text/css">
+</head>
+<body>  
+    <!-- Link to homepage located at the main project directory -->
+    <a href="{% url 'index'%}" class="linkhomepage">
+        <img src="{% static 'blog/django-python-logo.png' %}" alt="Link to Homepage" width="150px" title="Return to Homepage">
+    </a>
+    <nav>
+        <ul>
+            <!-- If the user is authenticated, these two links will be displayed -->
+            {% if user.is_authenticated %}
+                <li class="usersloggedin">
+                    <p>Welcome: {{user.username}}</p>
+                </li>
+                <li class="floatright">
+                    <!-- The following form is necesary to execute the action logout_view created in users/views.py -->
+                    <form action="{% url 'users:logout' %}" method="post">
+                        {% csrf_token %}
+                        <input type="submit" value="Log Out" class="logout" title="Log Out">
+                    </form>
+                </li>
+                <li class="floatright">
+                    <form action="{% url 'blog:newarticle' %}" method="post">
+                        {% csrf_token %}
+                        <input type="submit" value="New Article" class="newarticle" title="New Article">
+                    </form>
+                </li>
+            <!-- If the user is not authenticated, these two links will be diplayed -->
+            {% else %}
+                <li class="floatright" title="Sign Up!">
+                    <a href="{% url 'users:signup' %}" class="logsign">Sign Up</a>
+                </li>
+                <li class="floatright users" title="Sign In!">
+                    <a href="{% url 'users:login' %}" class="logsign">Log In</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% block main %}
+    {% endblock %}
+    <!-- Back to top button hidden. It will appears when scrolling down more than 50 -->
+    <button onclick="backToTop()" id="backTopBtn" class="backTopBtn"style="display:none;">Back to Top</button>
+    <script src="{% static 'blog/script.js' %}"></script>
+</body>
+</html>

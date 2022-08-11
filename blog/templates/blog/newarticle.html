@@ -1,0 +1,23 @@
+{% extends 'blog/layout.html' %}
+
+{% block title %}
+    New Article
+{% endblock %}
+
+{% block main %}
+    <br>
+    <h1 class="titlehome">Create a New Article</h1>
+    <br><br>
+    {% if message %}
+        <div class="wrong"> {{ message }} </div>
+    {% endif %}
+    <br>
+    <!-- As the a form submits a media file, its mandatory to use enctype="multipart/form-data" to encript that file -->
+    <div class="centering">
+        <form class="NewArticle" action="{% url 'blog:newarticle' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Create Article">
+        </form>
+    </div>
+{% endblock %}

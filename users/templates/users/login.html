@@ -1,0 +1,31 @@
+{% extends "blog/layout.html" %}
+
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+<br>
+    <h1 class="titlehome">Log in Page</h1>
+    <br><br>
+    <!-- If a message is to be displayed, it will be shown here -->
+    {% if message %}
+        <div class="wrong"> {{ message }}</div>
+    {% endif %}
+    <br>
+    <!-- Include the name of the app followed by ":" and the name of the path
+    to work properly url 'user:login' -->
+    <div class="centering">
+        <form action="{% url 'users:login' %}" method="post" class="loginForm">
+            {% csrf_token %}
+            {{ form }}
+            <!-- Checks if the next parameter is present in the browser. If it is
+            present, the request.GET.next the following input field will be triggered-->
+            {% if request.GET.next %}
+                <!-- Sends the value of the input as the next parameter to the browser -->
+                <input type="hidden" name="next", value="{{request.GET.next}}">
+            {% endif %}
+            <input type="submit" value="Log in">
+        </form>
+    </div>
+{% endblock %}

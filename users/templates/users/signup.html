@@ -1,0 +1,25 @@
+{% extends "blog/layout.html" %}
+
+{% block title %}
+    Sign Up
+{% endblock %}
+
+{% block main %}
+<br>
+    <h1 class="titlehome">Sign Up Page</h1>
+    <br><br>
+    <!-- If a message is to be displayed, it will be shown here -->
+    {% if message %}
+        <div class="wrong"> {{ message }}</div>
+    {% endif %}
+    <br>
+    <div class="centering">
+        <!-- Include the name of the app followed by ":" and the name of the path
+        to work properly url 'users:signup' -->
+        <form action="{% url 'users:signup' %}" method="post" class="signupForm">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Sign Up">
+        </form>
+    </div>
+{% endblock %}

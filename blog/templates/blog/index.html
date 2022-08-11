@@ -1,0 +1,29 @@
+{% extends "blog/layout.html" %}
+
+{% block title %}
+    Homepage
+{% endblock %}
+
+{% block main %}
+    <br>
+    <h1 class="titlehome">Blog Homepage</h1>
+    <br>
+    <!-- If a message is to be displayed, it will be shown here -->
+    {% if message %}
+        <div class="message"> {{ message }}</div>
+    {% endif %}
+    <h2 class="ArticleList">List of Articles</h2>
+    <div class="articles">
+        <!-- Display the list of articles dinamically-->
+            {% for article in Articles %}
+            <div class="individualArticle">
+                <h4><a href="{% url 'blog:article_detail' article.slug %}" title="{{ article.title }}">{{article.title}}</h4></a>
+                <p>{{article.snippet}}</p>
+                <p>{{article.date}}</p>
+                <br>
+                <p class="author">Author: {{article.author.username}}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
